@@ -57,7 +57,7 @@ if num_args < 4:
     sys.exit("Faltam argumentos: python3 main.py <nome_arquivo> <taxa_aprendizagem> <max_it>")
 
 nome_arq = sys.argv[1]
-taxa_aprendizagem = int(sys.argv[2])
+taxa_aprendizagem = float(sys.argv[2])
 max_it = int(sys.argv[3])
 
 treino, saida_treino, teste, saida_teste = leArquivo(nome_arq)
@@ -69,9 +69,16 @@ P.treinar()
 print("Rede treinada com sucesso")
 
 print("\nInício dos testes\n")
+iguais = 0
 for j in range(0, teste.shape[1]):
     entrada = np.array([ teste[i][j] for i in range(0, teste.shape[0]) ])
+    gabarito = np.array([saida_teste[i][j] for i in range(0, saida_teste.shape[0])])
     saida = P.calcular(entrada)
+    saida = P.f(saida)
     print("Entrada: " + str(entrada))
     print("Saída: " + str(saida))
-    print("Saída desejada: " + str([saida_teste[i][j] for i in range(0, saida_teste.shape[0])]) + '\n')
+    print("Saída desejada: " + str(gabarito) + '\n')
+    if (saida == gabarito).all():
+        iguais += 1
+
+print('\nIguais: ' + str(iguais) + '/' + str(j))
