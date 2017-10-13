@@ -24,9 +24,8 @@ def leArquivo(nome_arquivo):
         linha = linha[:-1]
         # Separa a entrada pela vírgula
         aux = linha.split(',')
-        #saidas.append(int(aux[0]))
         saidas.append([ int(i) for i in aux[:QTD_SAIDAS] ])
-        entradas.append([ float(i) for i in aux[1:] ])
+        entradas.append([ float(i) for i in aux[QTD_SAIDAS:] ])
         
 
     # Define a quantidade de entradas de treino e de teste
@@ -72,9 +71,6 @@ print("Rede treinada com sucesso")
 print("\nInício dos testes\n")
 for j in range(0, teste.shape[1]):
     entrada = np.array([ teste[i][j] for i in range(0, teste.shape[0]) ])
-    print(entrada.shape)
-    print(P.w.shape)
-    print(P.b.shape)
     saida = P.calcular(entrada)
     print("Entrada: " + str(entrada))
     print("Saída: " + str(saida))
