@@ -50,8 +50,15 @@ class Perceptron:
         E = 1                                       # erro
         e = np.zeros(shape=self.d.shape)           # vetor de erros
         while (t < self.max_it):
+            print('\n\nw: ' + str(self.w))
+            print('\nx: ' + str(self.x))
+            print('\nb: ' + str(self.b))
             y = np.matmul(self.w, self.x) + self.b
+            print('\ny: ' + str(y))
+            print('\nd: ' + str(self.d))
             e = self.d - y
+            print('\ne: ' + str(e))
+            print('alfa: ' + str(self.alfa))
             self.w = self.w + np.matmul((self.alfa * e), np.transpose(self.x))
             self.b = self.b + self.alfa * e
             E = self.retornaErro(e)

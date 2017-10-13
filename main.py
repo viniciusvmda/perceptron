@@ -74,4 +74,4 @@ for j in range(0, teste.shape[1]):
     saida = P.calcular(entrada)
     print("Entrada: " + str(entrada))
     print("Saída: " + str(saida))
-    print("Saída desejada: " + str(saida_teste[j]) + '\n')
+    print("Saída desejada: " + str([saida_teste[i][j] for i in range(0, saida_teste.shape[0])]) + '\n')
