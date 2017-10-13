@@ -10,6 +10,7 @@ import sys
 import numpy as np
 from perceptron import Perceptron
 
+QTD_SAIDAS = 3
 
 '''
 ' Lê o arquivo e separa as linhas em vetores de entrada e saída de treino e teste
@@ -23,9 +24,11 @@ def leArquivo(nome_arquivo):
         linha = linha[:-1]
         # Separa a entrada pela vírgula
         aux = linha.split(',')
-        saidas.append(int(aux[0]))
+        #saidas.append(int(aux[0]))
+        saidas.append([ int(i) for i in aux[:QTD_SAIDAS] ])
         entradas.append([ float(i) for i in aux[1:] ])
         
+
     # Define a quantidade de entradas de treino e de teste
     tamanho     = len(entradas)
     qtd_treino  = int(2/3 * tamanho)
@@ -34,12 +37,15 @@ def leArquivo(nome_arquivo):
     treino          = np.array(entradas[:qtd_treino])
     treino          = np.transpose(treino)
     saida_treino    = np.array(saidas[:qtd_treino])
+    saida_treino    = np.transpose(saida_treino)
 
     # Separa os vetores de teste
     teste           = np.array(entradas[qtd_treino:])
     teste           = np.transpose(teste)
     saida_teste     = np.array(saidas[qtd_treino:])
+    saida_teste     = np.transpose(saida_teste)
 
+    arq.close()
     return treino, saida_treino, teste, saida_teste
 
 
@@ -63,10 +69,12 @@ print("Treinando rede...")
 P.treinar()
 print("Rede treinada com sucesso")
 
-linhas, colunas = teste.shape
 print("\nInício dos testes\n")
-for j in range(0, colunas):
-    entrada = [ teste[i][j] for i in range(0, linhas) ]
+for j in range(0, teste.shape[1]):
+    entrada = np.array([ teste[i][j] for i in range(0, teste.shape[0]) ])
+    print(entrada.shape)
+    print(P.w.shape)
+    print(P.b.shape)
     saida = P.calcular(entrada)
     print("Entrada: " + str(entrada))
     print("Saída: " + str(saida))

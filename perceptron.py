@@ -13,21 +13,23 @@ class Perceptron:
     '''
     ' Construtor
     '''
-    def __init__(self, entrada, teste, taxa_aprendizagem, max_it):
-        self.x = entrada                                # entrada
+    def __init__(self, entrada, saida, taxa_aprendizagem, max_it):
+        LINHA = 0
+        COLUNA = 1
+        self.x = entrada                                                        # entrada
         self.linhas, self.colunas = entrada.shape
-        self.w = np.zeros(shape=(self.linhas))          # vetor de pesos
-        self.b = np.zeros(shape=(self.colunas))         # bias
-        self.d = teste                                  # vetor de teste
-        self.alfa = taxa_aprendizagem                   # taxa de aprendizagem
-        self.max_it = max_it                            # número máximo de iterações
+        self.w = np.zeros(shape=(saida.shape[LINHA], entrada.shape[LINHA]))     # vetor de pesos
+        self.d = saida                                                          # vetor de saida desejada
+        self.b = np.zeros(shape=self.d.shape)                                   # bias
+        self.alfa = taxa_aprendizagem                                           # taxa de aprendizagem
+        self.max_it = max_it                                                    # número máximo de iterações
 
 
     '''
     ' Calcula a saída para a entrada x
     '''
     def calcular(self, x):
-        return  np.matmul(self.w, x) + self.b
+        return np.matmul(self.w, x)
 
 
     '''
@@ -46,9 +48,9 @@ class Perceptron:
     def treinar(self):
         t = 1                                       # tempo
         E = 1                                       # erro
-        e = np.zeros(shape=(self.linhas))           # vetor de erros
-        while (t < self.max_it and E > 0):
-            y = self.calcular(self.x)
+        e = np.zeros(shape=self.d.shape)           # vetor de erros
+        while (t < self.max_it):
+            y = np.matmul(self.w, self.x) + self.b
             e = self.d - y
             self.w = self.w + np.matmul((self.alfa * e), np.transpose(self.x))
             self.b = self.b + self.alfa * e
