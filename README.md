@@ -25,21 +25,14 @@ Para visualizar as entradas, saídas desejadas e saídas obtidas do teste, basta
 * python3-tk
 
 ## Configuração do ambiente
-Instale o python3:
+Instale o python3, numpym, matplotlib e o python3-tk:
+
 ```
 sudo apt-get install python3
-
-Instale o numpy
-```
 pip3 install numpy
-
-Instale o matplotlib
-```
 pip3 install matplotlib
-
-Instale o python3-tk
-```
 sudo apt-get install python3-tk
+```
 
 ## Instrução para execução:
 Execute o seguinte comando no terminal:
