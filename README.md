@@ -26,22 +26,22 @@ Para visualizar as entradas, saídas desejadas e saídas obtidas do teste, basta
 
 ## Configuração do ambiente
 Instale o python3:
-``
+```
 sudo apt-get install python3
 
 Instale o numpy
-``
+```
 pip3 install numpy
 
 Instale o matplotlib
-``
+```
 pip3 install matplotlib
 
 Instale o python3-tk
-``
+```
 sudo apt-get install python3-tk
 
 ## Instrução para execução:
 Execute o seguinte comando no terminal:
-``
+```
 python3 main.py nome_arquivo taxa_aprendizagem max_it
