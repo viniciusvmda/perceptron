@@ -7,7 +7,7 @@
 ----------------------------------------------------------------------'''
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 class Perceptron:
     
     '''
@@ -23,6 +23,8 @@ class Perceptron:
         self.b = np.zeros(shape=self.d.shape)                                   # bias
         self.alfa = taxa_aprendizagem                                           # taxa de aprendizagem
         self.max_it = max_it                                                    # número máximo de iterações
+        self.erro = []                                                          # vetor de erros utilizado no plot
+        self.tempo = []                                                         # vetor de tempo utilizado no plot
 
 
     '''
@@ -33,14 +35,20 @@ class Perceptron:
 
 
     '''
-    ' Calcula o erro a partir da soma dos quadrados dos erros
+    ' Calcula o erro a partir do erro quadrático médio
     '''
     def retornaErro(self, e):
         E = 0
-        for it in e:
-            E += pow(it, 2)
+        i = 0
+        for i in range(0, e.shape[0]):
+            Es = 0
+            j = 0
+            for j in range(0, e.shape[1]):
+                Es += pow(e[i][j], 2)
+            E += Es / j
+        E = E / i
         return E
-
+    
 
     '''
     ' Função de ativação do tipo degrau
@@ -63,24 +71,31 @@ class Perceptron:
 
 
     '''
+    ' Gera o gráfico Erro x Iteração
+    '''
+    def gerarGrafico(self):
+        plt.plot(self.tempo, self.erro)
+        plt.ylabel('Erro')
+        plt.xlabel('Iteração')
+        plt.title('Gráfico Erro x Iteração')
+        plt.show()
+
+    '''
     ' Treinamento supervisionado
     '''
     def treinar(self):
+        self.tempo = []
+        self.erro = []
         t = 1                                       # tempo
         E = 1                                       # erro
-        e = np.zeros(shape=self.d.shape)           # vetor de erros
-        while (t < self.max_it):
-            #print('\n\nw: ' + str(self.w))
-            #print('\nx: ' + str(self.x))
-            #print('\nb: ' + str(self.b))
+        e = np.zeros(shape=self.d.shape)            # vetor de erros
+        while (t < self.max_it and E > 0):
             u = np.matmul(self.w, self.x) + self.b
             y = self.f(u)
-            #print('\ny: ' + str(y))
-            #print('\nd: ' + str(self.d))
             e = self.d - y
-            #print('\ne: ' + str(e))
-            #print('alfa: ' + str(self.alfa))
             self.w = self.w + np.matmul((self.alfa * e), np.transpose(self.x))
             self.b = self.b + self.alfa * e
             E = self.retornaErro(e)
+            self.tempo.append(t)
+            self.erro.append(E)
             t = t + 1

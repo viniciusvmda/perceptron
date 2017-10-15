@@ -62,7 +62,6 @@ max_it = int(sys.argv[3])
 
 treino, saida_treino, teste, saida_teste = leArquivo(nome_arq)
 
-# construtor (entrada, teste, taxa_aprendizagem, max_it)
 P = Perceptron(treino, saida_treino, taxa_aprendizagem, max_it)
 print("Treinando rede...")
 P.treinar()
@@ -75,10 +74,14 @@ for j in range(0, teste.shape[1]):
     gabarito = np.array([saida_teste[i][j] for i in range(0, saida_teste.shape[0])])
     saida = P.calcular(entrada)
     saida = P.f(saida)
-    print("Entrada: " + str(entrada))
-    print("Saída: " + str(saida))
-    print("Saída desejada: " + str(gabarito) + '\n')
+    
+    #print("Entrada: " + str(entrada))
+    #print("Saída: " + str(saida))
+    #print("Saída desejada: " + str(gabarito) + '\n')
+    
     if (saida == gabarito).all():
         iguais += 1
 
-print('\nIguais: ' + str(iguais) + '/' + str(j))
+print('Iguais: ' + str(iguais) + '/' + str(j))
+print('Taxa de acerto: ' + str(round(100 / j * iguais, 2)) + '%')
+P.gerarGrafico()
